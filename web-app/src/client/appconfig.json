@@ -1,0 +1,9 @@
+{
+  "apiUrl": "http://206.189.192.166:5000",
+  "addDeviceUrl": "/send-device",
+  "getDevicesUrl": "/get-devices/{public-key}",
+  "getDeviceDetailUrl": "/get-device-details/{device-id}",
+  "addUrl": "/home/add",
+  "helpText": "",
+  "googleAnalitycsId": "TBD"
+}

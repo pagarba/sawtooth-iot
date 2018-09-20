@@ -1,0 +1,16 @@
+<div class="confirm-dialog-container">
+
+  <div mat-dialog-title *ngIf="title">
+    {{ title }}
+  </div>
+
+  <div mat-dialog-content>    
+    {{ message }}
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="dialogRef.close(true)">{{ confirmButtonTxt }}</button>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+  </div>
+
+</div>

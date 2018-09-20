@@ -1,0 +1,52 @@
+<!-- <div class="app-container">
+  <ng2-toasty></ng2-toasty>
+  <div class="header" *ngIf="isUserLoggedIn">
+    <paragba-header [pageTitle]="pageTitle"></paragba-header>
+  </div>
+  <div *ngIf="isUserLoggedIn" class="{{expanded ? 'left-pane expanded' : 'left-pane collapsed'}}">
+    <paragba-menu [expanded]="expanded"></paragba-menu>
+  </div>
+  <div class="{{isUserLoggedIn ? 'body partial' : 'body full'}}">
+    <div class="content-container">
+      <div *ngIf="!isUserLoggedIn" (onHidden)="onLoginModalHidden()">
+        <app-login></app-login>
+      </div>
+      <router-outlet *ngIf="isUserLoggedIn"></router-outlet>
+    </div>    
+  </div>
+</div> -->
+
+<!--<div class="app-container" [ngClass]="{'app-container__login-bg': !isUserLoggedIn}">-->
+<div class="app-container">
+  <ng2-toasty></ng2-toasty>
+  <mat-sidenav-container autosize>
+    <mat-sidenav #sidenav mode="side"
+      [opened]="menuOpened"
+      [mode]="isMobile ? 'over' : 'side'"
+      [fixedInViewport]="isMobile"
+      fixedTopGap="0"
+      [ngClass]="{collapsed: menuCollapsed}">
+        <paragba-menu [collapsed]="menuCollapsed"></paragba-menu>
+        <div class="drawer-bottom">
+          <button (click)="toggleMenuCollapse()"
+            [ngClass]="{'action-collapse': !menuCollapsed, 'action-expand': menuCollapsed}"></button>
+        </div>
+    </mat-sidenav>
+    
+    <mat-sidenav-content id="content">
+      <!--<mat-toolbar *ngIf="isUserLoggedIn && !isUserFirstLogin">-->
+      <mat-toolbar>
+        <button mat-icon-button (click)="toggleMenuOpen()"
+          [ngClass]="{hidden: !isMobile}">
+          <mat-icon>menu</mat-icon>
+        </button>  
+        <paragba-header [pageTitle]="pageTitle"></paragba-header>
+      </mat-toolbar>
+
+      <div class="app-body">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<ng4-loading-spinner [threshold]="100"></ng4-loading-spinner>

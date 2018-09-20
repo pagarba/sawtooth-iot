@@ -1,0 +1,21 @@
+// Import all the theming functionality.
+@import "../../app/shared/header/header-theme";
+@import "../../app/shared/leftmenu/leftmenu-theme";
+@import "../../app/device/all-devices-theme";
+@import "../../app/device/device-detail-theme";
+@import "../../app/myaccount/my-account-theme";
+@import "../../app/login/login-theme";
+@import "../../app/_app.component-theme.scss";
+@import "../../app/controls/dialog/confirm-dialog/_confirm-dialog-theme.scss";
+
+// Create a theme.
+@mixin paragba-theme($theme) {
+  @include paragba-header-theme($theme);
+  @include paragba-leftmenu-theme($theme);
+  @include paragba-myaccount-theme($theme);
+  @include paragba-login-theme($theme);
+  @include paragba-app-theme($theme);
+  @include paragba-confirm-dialog-theme($theme);
+  @include all-devices-theme($theme);
+  @include device-detail-theme($theme);
+}
