@@ -1,0 +1,12 @@
+<div *ngFor="let module of modulesList" class="mdl-card mdl-shadow--2dp demo-card-square" (click)="navigate(module)">
+  <div class="mdl-card__actions mdl-card--border">
+    <div class="card-content">
+      <div>
+        <i *ngIf="module.icon" class="material-icons md-48">{{ module.icon }}</i>
+      </div>
+      <div>
+        <span>{{ module.title }}</span>
+      </div>
+    </div>
+  </div>
+</div>

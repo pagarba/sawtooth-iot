@@ -1,0 +1,140 @@
+@import "../scss/theming/theming";
+@import "../scss/theming/palette";
+@import "../scss/theming/mixins";
+
+@mixin paragba-app-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $paragba-fonts: map-get($theme, fonts);
+
+  .mat-card-title {
+    color: paragba-color($primary);
+    font-size: map-get($paragba-fonts, heading-2);
+  }
+
+  .mat-fab.mat-primary,
+  .mat-mini-fab.mat-primary,
+  .mat-raised-button.mat-primary {
+    background-color: paragba-color($warn);
+  }
+
+  .type-select-control {
+    max-height: 275px !important;
+    @include tablet {
+      max-height: 42px * 9 !important;
+    }
+    .ng-star-inserted:last-child .mat-option {
+      border-top: 1px solid map-get($paragba-grey, 400);
+      color: map-get($paragba-deep-orange, 800);
+    }
+  }
+
+  .mat-drawer-container {
+    background-color: transparent;
+    height: 100%;
+
+    & > .mat-toolbar {
+      flex: 1;
+    }
+  }
+
+  .mat-drawer {
+    background-color: paragba-color($paragba-grey, 100);
+    width: 230px;
+
+    &.collapsed {
+      width: 65px;
+    }
+    
+    display: flex!important;
+    flex-direction: column;
+  }
+
+
+  .app-container {
+    background-color: #fff;
+  }
+
+  .mat-form-field {
+    margin-top: 1.25em;
+  }
+
+
+  .drawer-bottom {
+    border-top: 1px solid paragba-color($paragba-grey, 300);
+    text-align: right;
+    button {
+      border: 0;
+      background: none;
+      padding: 10px 15px;
+      width: 100%;
+      color: paragba-color($paragba-grey, 400);
+      &:hover {
+        color: paragba-color($paragba-grey, 400);
+        background-color: paragba-color($paragba-grey, 200);
+      }
+      &:before {
+        content:'';
+        width: 16px;
+        height: 16px;
+        background-position: 50% 50%;
+        background-size: 10px 10px;
+        background-repeat: no-repeat;
+        display: inline-block;
+        vertical-align: middle;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOC40MTcgMTUuNSI+PHBhdGggZmlsbD0iIzk5OSIgZD0iTTE2LjkxNyAxNS41Yy0uMzg0IDAtLjc2OC0uMTQ2LTEuMDYtLjQ0bC02LjI1LTYuMjVjLS41ODctLjU4NC0uNTg3LTEuNTM1IDAtMi4xMmw2LjI1LTYuMjVjLjU4NS0uNTg2IDEuNTM0LS41ODYgMi4xMiAwIC41ODYuNTg1LjU4NiAxLjUzNiAwIDIuMTJsLTUuMTkgNS4xOSA1LjE5IDUuMTljLjU4Ni41ODQuNTg2IDEuNTM1IDAgMi4xMi0uMjkzLjI5NC0uNjc3LjQ0LTEuMDYuNDR6Ii8+PHBhdGggZmlsbD0iIzk5OSIgZD0iTTcuNzUgMTUuNWMtLjM4NCAwLS43NjgtLjE0Ni0xLjA2LS40NEwuNDQgOC44MWMtLjU4Ny0uNTg0LS41ODctMS41MzUgMC0yLjEyTDYuNjkuNDRjLjU4NS0uNTg2IDEuNTM0LS41ODYgMi4xMiAwIC41ODYuNTg1LjU4NiAxLjUzNiAwIDIuMTJMMy42MiA3Ljc1bDUuMTkgNS4xOWMuNTg2LjU4NC41ODYgMS41MzUgMCAyLjEyLS4yOTIuMjk0LS42NzYuNDQtMS4wNi40NHoiLz48L3N2Zz4=');
+      }
+      &.action-collapse:before {
+        transform: rotate(0deg);
+      }
+      &.action-expand:before {
+        transform: rotate(180deg);
+      }
+      &.action-collapse {
+        text-align: right;
+      }
+      &.action-expand {
+        text-align: center;
+      }
+    }
+  }
+
+  .la-ball-clip-rotate-multiple.la-3x {
+    left: 50%!important;
+    margin-left: -48px;
+  }
+
+  .mat-fab.theme-primary,
+  .mat-mini-fab.theme-primary,
+  .mat-raised-button.theme-primary {
+    background-color: paragba-color($warn);
+    color: #fff;
+  }
+  .mat-fab.theme-warn,
+  .mat-mini-fab.theme-warn,
+  .mat-raised-button.theme-warn {
+    background-color: paragba-color($primary);
+    color: #fff;
+  }
+
+  .text-primary {
+    color: paragba-color($primary);
+  }
+  .text-accent {
+    color: paragba-color($accent);
+  }
+
+  .text-sm {
+    font-size: 12px;
+  }
+
+  .text-nowrap {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+  }
+}

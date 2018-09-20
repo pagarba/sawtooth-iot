@@ -1,0 +1,21 @@
+.logo {
+  display: block;
+  cursor: pointer;
+  height: 54px;
+  width: 100%;
+  margin: 0 auto;
+  background-image: url('/assets/images/app_logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &-small {
+    background-image: url('/assets/images/app_logo_small.png');
+  }
+}
+
+@mixin paragba-menu-ul-padding-start($length) {
+  -webkit-padding-start: $length;
+  -moz-padding-start: $length;
+  -webkit-padding-start: $length;
+  padding-start: $length;
+}

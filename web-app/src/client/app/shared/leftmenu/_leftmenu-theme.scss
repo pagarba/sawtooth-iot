@@ -1,0 +1,59 @@
+@import "../../../scss/theming/theming";
+@import "../../../scss/theming/palette";
+
+@mixin paragba-leftmenu-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $paragba-fonts: map-get($theme, fonts);
+
+  .main-menu{
+    &.mat-list {
+      &:not(:last-child) {
+        border-bottom: 1px solid paragba-color($paragba-grey, 300);
+      }
+
+      .mat-list-item.parent-item {
+        // border-color: paragba-color($paragba-corp-orange, 500);
+        background-color: paragba-color($primary, 500);
+        color: white;
+        .mat-list-text h3 {
+          font-weight: 500;
+        }
+      }
+
+      .active-link {
+        background-color: paragba-color($accent, 500);
+      }
+
+      .mat-list-item.child-item {
+        // background-color: paragba-color($paragba-corp-lightgrey, 100);
+      }
+    }
+
+    & .mat-list-item {
+      
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      &:not(.active-link):not(.parent-item):hover {
+        background-color: transparentize(paragba-color($accent, 500), 0.9);
+        transition: background 0.2s ease;
+      }
+
+      &.active-link {
+        background-color: paragba-color($accent, 500);
+        color: white;
+      }
+    }
+  }
+
+  paragba-menu {
+    flex: 1;
+  }
+}

@@ -1,0 +1,61 @@
+@import "../../../scss/theming/theming";
+@import "../../../scss/theming/palette";
+
+@mixin paragba-header-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $paragba-fonts: map-get($theme, fonts);
+
+  .title {
+    color: paragba-color($accent);
+    font-size: map-get($paragba-fonts, heading-2);
+    @include tablet {
+      font-size: map-get($paragba-fonts, heading-1);
+    }
+  }
+
+  .help-text {
+    font-size: map-get($paragba-fonts, heading-3);
+    line-height: 36px;
+    margin: 0 5px;
+    display: none;
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  .material-icons {
+    &.help {
+      color: paragba-color($primary);
+    }
+  }
+
+  paragba-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .user-section {
+    /* To remove the default underline */
+    .mat-input-underline.mat-form-field-underline {
+      background: transparent;
+    }
+    /* To remove the underline ripple */
+    .mat-input-ripple.mat-form-field-ripple {
+      background-color: transparent;
+    }
+  }
+
+  .mat-raised-button.logout {
+    color: white;
+    background-color: paragba-color($primary);
+    height: map-get($paragba-fonts, icon-x-large);
+    line-height: map-get($paragba-fonts, icon-x-large);
+  }
+}
