@@ -1,0 +1,14 @@
+.flex-spacer {
+  flex: 1;
+}
+
+.material-icons {
+  &.help {
+    padding-right: 10px;
+    vertical-align: middle;
+  }
+}
+
+.help-link {
+  cursor: pointer;
+}

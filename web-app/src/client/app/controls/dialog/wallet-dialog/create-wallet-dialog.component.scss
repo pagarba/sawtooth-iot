@@ -1,0 +1,29 @@
+@import "../../../../scss/theming/mixins";
+@import "../../../../scss/theming/palette";
+
+
+.title {
+  font-size: map-get($paragba-fonts, heading-2);
+}
+
+.main-title {
+  font-size: map-get($paragba-fonts, heading-2);
+  text-align: center;
+
+  @include tablet {
+    font-size: map-get($paragba-fonts, heading-1);
+  }
+}
+
+.section {
+    padding-top: 20px;  
+}
+
+.passphrase-section {
+    padding-top: 20px;  
+    padding-bottom: 20px;
+}
+
+.passphrase-alert{
+    background-color: lightcoral;
+}

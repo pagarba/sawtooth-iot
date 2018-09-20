@@ -1,0 +1,139 @@
+@import "../../scss/theming/theming";
+@import "../../scss/theming/palette";
+@import "../../scss/theming/mixins";
+
+@mixin paragba-login-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $paragba-fonts: map-get($theme, fonts);
+
+  .mdl-card {
+    i {
+      color: paragba-color($accent);
+      font-size: map-get($paragba-fonts, icon-3x-large);
+    }
+  }
+
+  .welcome-message {
+    span {
+      font-size: map-get($paragba-fonts, heading-2);
+      font-weight: bold;
+
+      @include tablet {
+        font-size: map-get($paragba-fonts, heading-1);
+      }
+    }
+  }
+
+  .login-message {
+    span {
+      font-size: map-get($paragba-fonts, heading-2);
+      font-weight: bold;
+
+      @include tablet {
+        font-size: map-get($paragba-fonts, heading-1);
+      }
+    }
+  }
+
+  .login-btn-section {
+    button {
+      background-color: paragba-color($warn);
+    }
+
+    .cancel {
+      background-color: paragba-color($primary);
+    }
+  }
+
+  .rememberme-section {
+    span {
+      color: paragba-color($primary);
+    }
+
+    mat-checkbox.md-checked {
+      background-color: paragba-color($primary);
+    }
+
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+      background-color: paragba-color($accent);
+    }
+  }
+
+  .loginBtn {
+    background-color: paragba-color($primary);
+    color: paragba-color($primary);
+  }
+
+  .addBtn {
+    background-color: paragba-color($warn);
+    color: paragba-color($warn);
+  }
+
+  .mat-raised-button {
+    background-color: paragba-color($primary);
+  }
+
+  .login-form {
+    padding-top: 10px;
+  }
+
+  .forgot-password {
+    color: paragba-color($warn) !important;
+  }
+
+
+
+  .center-flex {
+    // min-height: 80vh;
+    // height: 100%;
+    height: calc(100vh - 30px);
+    display: block;
+    
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+  }
+  
+  
+  .login-card {
+    max-width: 440px;
+  }
+  
+  .login-header-image {
+    height: 54px;
+    width: 184px;
+    margin: 0 auto;
+    background-image: url('../assets/images/app_logo.png');
+    background-repeat: no-repeat;
+  }
+  
+  
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .half-width {
+    width: 49%;
+  }
+  
+ 
+  
+  @media (min-width: 1200px) {
+    .login-container {
+      width: 400px;
+    }
+  }
+  
+
+}

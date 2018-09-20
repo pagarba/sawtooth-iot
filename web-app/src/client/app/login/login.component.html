@@ -1,0 +1,42 @@
+<div class="center-flex">
+    <div class="login-container">
+      
+        <mat-card class="login-card">
+          <mat-card-header>
+            <div class="login-header-image"></div>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="welcome-message text-primary">
+              <span>Welcome to Pagarba Wallet</span>
+            </div>
+            <div class="login-btn-section">
+                <button mat-raised-button class="addBtn full-width" (click)="createNew()" [disabled]="isAdding">{{ isAdding ? 'Creating new  wallet ...' : 'Create New Wallet' }}</button>
+              </div>
+          </mat-card-content>
+          <mat-card-content>
+            <form *ngIf="formResetToggle" class="form-horizontal login" name="loginForm" #f="ngForm" novalidate
+                  (ngSubmit)="f.form.valid ? login() :
+                            (!password.valid && showErrorAlert('Password is required', 'Please enter a valid password'))">
+          
+              <div class="login-message text-accent">
+                <span>Login Into Your Wallet</span>
+              </div>
+              <div class="login-form">
+                <mat-form-field class="full-width">
+                  <input matInput type="password" placeholder="Enter your 12 word passphrase " [(ngModel)]="userLogin.password" name="password" #password="ngModel" required>
+                  <mat-error>This field is required</mat-error>
+                </mat-form-field>
+              </div>
+            <div class="login-btn-section">
+              <button mat-raised-button class="loginBtn full-width" (click)="login()" [disabled]="isLoading">{{ isLoading ? 'Openning your wallet ...' : 'Open Wallet' }}</button>
+            </div>
+            </form>
+          </mat-card-content>
+          <mat-card-content>
+            <div>
+              {{ helpText }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+    </div>
+</div>
