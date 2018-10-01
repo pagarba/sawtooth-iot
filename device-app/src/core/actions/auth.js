@@ -18,3 +18,10 @@ export const logout = () => dispatch => {
 
   dispatch(push('/login'));
 }
+
+export const resetAccount = account => dispatch => {
+  dispatch({
+    type: constants.ACCOUNT_FETCH_SUCCESS,
+    account,
+  });
+}

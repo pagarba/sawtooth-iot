@@ -10,6 +10,7 @@ import Devices from '../containers/Devices';
 import DeviceDetail from '../containers/Devices/detail';
 import Events from '../containers/Events';
 import EventDetail from '../containers/Events/detail';
+import { apiKey, appId } from '../config'
 
 const userPaths = [
   'dashboard',

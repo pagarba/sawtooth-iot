@@ -17,7 +17,7 @@ import IntegrationsIcon from '@material-ui/icons/SettingsInputComponent';
 import TutorialsIcon from '@material-ui/icons/School';
 
 import SideMenuItem from '../components/SideMenuItem';
-import { logout } from '../core/actions/auth';
+import { logout, resetAccount } from '../core/actions/auth';
 import { apiKey, appId } from '../config';
 
 const drawerWidth = 240;
@@ -111,15 +111,7 @@ class MainLayout extends React.Component {
     }
   }
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
-  logout = async () => {
+  async componentDidMount() {
     let { account } = this.props;
 
     if (!account.logout) {
@@ -131,8 +123,21 @@ class MainLayout extends React.Component {
       });
 
       account = await abcContext.loginWithKey(username, loginKey);
-    }
 
+      this.props.resetAccount(account);
+    }
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
+  logout = async () => {
+    let { account } = this.props;
     account.logout();
     this.props.logout();
   };
@@ -238,6 +243,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => dispatch(logout()),
+    resetAccount: account => dispatch(resetAccount(account)),
   };
 }
 

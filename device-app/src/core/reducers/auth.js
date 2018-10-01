@@ -7,6 +7,11 @@ export default (state = {}, action) => {
         ...state,
         account: action.account,
       };
+    case constants.ACCOUNT_FETCH_SUCCESS:
+      return {
+        ...state,
+        account: action.account,
+      };
     case constants.LOGOUT_SUCCESS:
       return {
         ...state,
