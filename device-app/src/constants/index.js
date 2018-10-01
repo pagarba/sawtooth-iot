@@ -14,3 +14,12 @@ export const devices = [
   { 'deviceId': 'aslkfjLFALJS9SFKL', 'deviceKey': 'slfhl98uj', 'deviceName': 'Drone 123lj',
     'deviceType': 'Drone' }
 ];
+
+export const events = [
+  {
+    eventName: 'E-Trigger-Fail', deviceId: 'ts123456', data: 'primary malfunction', publishedBy: 'device123456', postTime: '2018-09-15 08:39:01'
+  },
+  {
+    eventName: 'E-Fired', deviceId: 'f123456', data: 'manual pull', publishedBy: 'pedro_latimer', postTime: '2018-09-15 08:39:01'
+  }
+]

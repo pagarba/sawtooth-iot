@@ -8,12 +8,15 @@ import Login from '../containers/Login';
 import Dashboard from '../containers/Dashboard';
 import Devices from '../containers/Devices';
 import DeviceDetail from '../containers/Devices/detail';
+import Events from '../containers/Events';
+import EventDetail from '../containers/Events/detail';
 
 const userPaths = [
   'dashboard',
   'devices',
   'deviceDetail',
   'events',
+  'eventDetail',
   'integrations',
   'tutorials'
 ];
@@ -30,6 +33,8 @@ class Routes extends Component {
 
     if (pathname[1] === 'devices' && pathname.length === 3) {
       pathname = 'deviceDetail';
+    } else if (pathname[1] === 'events' && pathname.length === 3) {
+      pathname = 'eventDetail';
     } else {
       pathname = pathname[1];
     }
@@ -70,6 +75,18 @@ class Routes extends Component {
               exact
               path="/devices/:deviceId"
               component={DeviceDetail}
+            />
+            <Route
+              location={location}
+              exact
+              path="/events"
+              component={Events}
+            />
+            <Route
+              location={location}
+              exact
+              path="/events/:deviceId"
+              component={EventDetail}
             />
             {pathname === '' && <Redirect to="/dashboard"/>}
           </MainLayout>
