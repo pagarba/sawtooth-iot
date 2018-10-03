@@ -23,3 +23,6 @@ export const events = [
     eventName: 'E-Fired', deviceId: 'f123456', data: 'manual pull', publishedBy: 'pedro_latimer', postTime: '2018-09-15 08:39:01'
   }
 ]
+
+export const integrations = ['justifire', 'visualFlights'];
+export const newIntegrations = ['triggerSmart', 'datalife', 'guniary'];

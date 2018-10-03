@@ -10,7 +10,7 @@ import Devices from '../containers/Devices';
 import DeviceDetail from '../containers/Devices/detail';
 import Events from '../containers/Events';
 import EventDetail from '../containers/Events/detail';
-import { apiKey, appId } from '../config'
+import Integrations from '../containers/Integrations';
 
 const userPaths = [
   'dashboard',
@@ -88,6 +88,12 @@ class Routes extends Component {
               exact
               path="/events/:deviceId"
               component={EventDetail}
+            />
+            <Route
+              location={location}
+              exact
+              path="/integrations"
+              component={Integrations}
             />
             {pathname === '' && <Redirect to="/dashboard"/>}
           </MainLayout>
