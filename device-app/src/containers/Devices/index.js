@@ -146,7 +146,7 @@ class Devices extends Component {
           <ExpansionPanelDetails>
             <DevicesTable
               history={history}
-              data={this.props.devices.things}
+              data={this.props.devices ? this.props.devices.things : []}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>

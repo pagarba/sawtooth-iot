@@ -82,8 +82,10 @@ class DeviceDetail extends Component {
   };
 
   render() {
-    const { classes, device } = this.props;
+    const { classes } = this.props;
     const { isEditMode } = this.state;
+
+    const device = this.props.device || {};
 
     return (
       <div className={classes.root}>

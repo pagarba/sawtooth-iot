@@ -32,7 +32,8 @@ const middleware = composeWithDevTools(
   applyMiddleware(reduxThunk, routerMiddleware(history))
 );
 
-axios.defaults.headers.common.authorization = localStorage.token;
+if (localStorage.token)
+  axios.defaults.headers.common.authorization = localStorage.token;
 axios.defaults.baseURL = 'https://69.55.54.104';
 
 axios.interceptors.request.use(function (config) {
