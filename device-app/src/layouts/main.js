@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import { AppBar, Button, Divider, Drawer, IconButton, List, Toolbar, Typography } from '@material-ui/core';
 
@@ -111,7 +112,7 @@ class MainLayout extends React.Component {
     }
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     let { account } = this.props;
 
     if (!account.logout) {

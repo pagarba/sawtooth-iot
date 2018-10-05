@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { login } from '../../core/actions/auth';
 
 import { apiKey, appId, vendorName } from '../../config';
+import axios from 'axios';
 
 const abcui = require('airbitz-core-js-ui')
 const styles = theme => ({})
@@ -26,14 +27,40 @@ class Login extends Component {
     }
   }
 
+  login = async (account) => {
+    const { loginKey, username } = account;
+    const data = {
+      email:`${username}@pagarba.io`,
+      password: loginKey,
+    };
+
+    const response = await axios.post('/tokens', data);
+    localStorage.setItem('token', response.data.token);
+    axios.defaults.headers.common.authorization = response.data.token;
+    this.props.login(account);
+  }
+
   componentDidMount() {
-    this.state._abcUI.openLoginWindow((error, account) => {
+    this.state._abcUI.openLoginWindow(async (error, account) => {
       if (error) {
         console.log(error)
       }
 
       console.log(account);
-      this.props.login(account);
+      const { loginKey, username } = account;
+      const data = {
+        email:`${username}@pagarba.io`,
+        password: loginKey,
+      };
+
+      try {
+        await axios.post('/users', data);
+        await this.login(account);
+      } catch(e) {
+        if (e.response.status === 409) {
+          await this.login(account);
+        }
+      }
     })
   }
 

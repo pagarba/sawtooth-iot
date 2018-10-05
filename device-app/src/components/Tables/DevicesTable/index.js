@@ -62,10 +62,10 @@ function getSorting(order, orderBy) {
 }
 
 const rows = [
-  { id: 'deviceId', numeric: false, disablePadding: true, label: 'Device ID' },
-  { id: 'deviceName', numeric: false, disablePadding: true, label: 'Device Name' },
-  { id: 'deviceKey', numeric: false, disablePadding: true, label: 'Device Key' },
-  { id: 'deviceType', numeric: false, disablePadding: true, label: 'Device Type' },
+  { id: 'id', numeric: false, disablePadding: true, label: 'Device ID' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Device Name' },
+  { id: 'key', numeric: false, disablePadding: true, label: 'Device Key' },
+  { id: 'type', numeric: false, disablePadding: true, label: 'Device Type' },
 ];
 
 class DevicesTable extends Component {
@@ -104,8 +104,8 @@ class DevicesTable extends Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
-    const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { classes, data } = this.props;
+    const { order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -129,16 +129,16 @@ class DevicesTable extends Component {
                     <TableRow
                       hover
                       role="checkbox"
-                      onClick={event => this.handleClick(event, n.deviceId)}
+                      onClick={event => this.handleClick(event, n.id)}
                       aria-checked={isSelected}
                       tabIndex={-1}
                       key={n.deviceId}
                       selected={isSelected}
                     >
-                      <TableCell component="th" scope="row">{n.deviceId}</TableCell>
-                      <TableCell>{n.deviceName}</TableCell>
-                      <TableCell>{n.deviceKey}</TableCell>
-                      <TableCell>{n.deviceType}</TableCell>
+                      <TableCell component="th" scope="row">{n.id}</TableCell>
+                      <TableCell>{n.name}</TableCell>
+                      <TableCell>{n.key}</TableCell>
+                      <TableCell>{n.type}</TableCell>
                     </TableRow>
                   );
                 })}

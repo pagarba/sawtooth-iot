@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -20,6 +21,7 @@ import Select from '@material-ui/core/Select';
 import { withStyles } from "@material-ui/core/styles/index";
 
 import DevicesTable from '../../components/Tables/DevicesTable';
+import { createDevice, getDevices } from '../../core/actions/device';
 
 const styles = theme => ({
   root: {
@@ -52,6 +54,10 @@ class Devices extends Component {
     deviceKey: '',
   };
 
+  componentWillMount() {
+    this.props.getDevices();
+  }
+
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false,
@@ -67,9 +73,23 @@ class Devices extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  addDevice = () => {
+    const { deviceName, deviceType } = this.state;
+
+    if (deviceName && deviceType) {
+      this.props.createDevice({
+        type: deviceType,
+        name: deviceName,
+      }).then(() => {
+        this.props.getDevices();
+      });
+    }
+  };
+
   render() {
     const { classes, history } = this.props;
     const { expanded } = this.state;
+
     return (
       <div className={classes.root}>
         <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
@@ -83,11 +103,11 @@ class Devices extends Component {
               <FormHelperText id="component-error-text">This field is required</FormHelperText>
             </FormControl>
 
-            <FormControl className={classes.formControl} error={this.state.deviceKey === null} fullWidth aria-describedby="component-error-text">
-              <InputLabel htmlFor="component-error">Device Key*</InputLabel>
-              <Input name="deviceKey" value={this.state.deviceKey} onChange={this.handleInputChange} onBlur={this.handleBlur} />
-              <FormHelperText id="component-error-text">This field is required</FormHelperText>
-            </FormControl>
+            {/*<FormControl className={classes.formControl} error={this.state.deviceKey === null} fullWidth aria-describedby="component-error-text">*/}
+              {/*<InputLabel htmlFor="component-error">Device Key*</InputLabel>*/}
+              {/*<Input name="deviceKey" value={this.state.deviceKey} onChange={this.handleInputChange} onBlur={this.handleBlur} />*/}
+              {/*<FormHelperText id="component-error-text">This field is required</FormHelperText>*/}
+            {/*</FormControl>*/}
 
             <FormControl className={classes.formControl} fullWidth>
               <InputLabel htmlFor="deviceType">Device Type</InputLabel>
@@ -99,14 +119,22 @@ class Devices extends Component {
                   id: 'deviceType',
                 }}
               >
-                <MenuItem value={1}>Gun</MenuItem>
-                <MenuItem value={2}>Scope</MenuItem>
-                <MenuItem value={3}>Drone</MenuItem>
-                <MenuItem value={4}>Other</MenuItem>
+                <MenuItem value="device">Device</MenuItem>
+                <MenuItem value="app">App</MenuItem>
+                {/*<MenuItem value={1}>Gun</MenuItem>*/}
+                {/*<MenuItem value={2}>Scope</MenuItem>*/}
+                {/*<MenuItem value={3}>Drone</MenuItem>*/}
+                {/*<MenuItem value={4}>Other</MenuItem>*/}
               </Select>
             </FormControl>
 
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button
+              className={classes.button}
+              color="primary"
+              onClick={this.addDevice}
+              variant="contained"
+              disabled={this.props.isCreatingDevice}
+            >
               Add Device
             </Button>
           </ExpansionPanelDetails>
@@ -118,6 +146,7 @@ class Devices extends Component {
           <ExpansionPanelDetails>
             <DevicesTable
               history={history}
+              data={this.props.devices.things}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -131,4 +160,19 @@ Devices.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Devices);
+function mapStateToProps(state) {
+  return {
+    devices: state.rootReducer.device.devices,
+    isCreatingDevice: state.rootReducer.device.isCreatingDevice,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getDevices: () => dispatch(getDevices()),
+    createDevice: data => dispatch(createDevice(data)),
+  }
+}
+
+const WithStyles =  withStyles(styles, { withTheme: true })(Devices);
+export default connect(mapStateToProps, mapDispatchToProps)(WithStyles);

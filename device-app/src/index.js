@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { ConnectedRouter } from 'react-router-redux';
+import axios from 'axios';
 
 import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -31,6 +32,14 @@ const middleware = composeWithDevTools(
   applyMiddleware(reduxThunk, routerMiddleware(history))
 );
 
+axios.defaults.headers.common.authorization = localStorage.token;
+axios.defaults.baseURL = 'https://69.55.54.104';
+
+axios.interceptors.request.use(function (config) {
+  config.headers['Content-Type'] = 'application/json';
+  return config;
+});
+
 const pReducer = persistReducer(persistConfig, combineReducers({ rootReducer, routerReducer }));
 export const store = middleware(createStore)(pReducer);
 export const persistor = persistStore(store);
@@ -38,7 +47,7 @@ export const persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={<div>AAA</div>} persistor={persistor}>
+    <PersistGate loading={<div/>} persistor={persistor}>
       <ConnectedRouter history={history}>
         <Route component={App} />
       </ConnectedRouter>

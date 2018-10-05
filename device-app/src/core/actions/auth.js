@@ -16,6 +16,8 @@ export const logout = () => dispatch => {
     type: constants.LOGOUT_SUCCESS
   });
 
+  localStorage.removeItem('token');
+
   dispatch(push('/login'));
 }
 
