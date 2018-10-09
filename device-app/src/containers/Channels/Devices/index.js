@@ -22,6 +22,7 @@ import { withStyles } from "@material-ui/core/styles/index";
 
 import ChannelDevicesTable from '../../../components/Tables/ChannelDevicesTable';
 import { addDeviceToChannel, getChannel, getChannels } from '../../../core/actions/channel'
+import { getDevices } from '../../../core/actions/device'
 
 const styles = theme => ({
   root: {
@@ -54,7 +55,7 @@ class Devices extends Component {
   };
 
   componentWillMount() {
-
+    this.props.getDevices();
   }
 
   handleChange = panel => (event, expanded) => {
@@ -96,7 +97,7 @@ class Devices extends Component {
     const { expanded } = this.state;
     const connectedDevices = this.props.channel.connected || [];
 
-    let devices = this.props.devices.things.filter(dev1 => 0 === connectedDevices.filter(dev2 => dev1.id === dev2.id).length);
+    let devices = this.props.devices ? this.props.devices.things.filter(dev1 => 0 === connectedDevices.filter(dev2 => dev1.id === dev2.id).length) : [];
 
     return (
       <div className={classes.root}>
@@ -167,6 +168,7 @@ function mapDispatchToProps(dispatch) {
   return {
     addDeviceToChannel: (channelId, deviceId) => dispatch(addDeviceToChannel(channelId, deviceId)),
     getChannels: () => dispatch(getChannels()),
+    getDevices: () => dispatch(getDevices()),
     getChannel: (id) => dispatch(getChannel(id)),
   }
 }
