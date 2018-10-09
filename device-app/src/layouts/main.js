@@ -12,6 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import DevicesIcon from '@material-ui/icons/Devices';
+import ChannelsIcon from '@material-ui/icons/Radio';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EventIcon from '@material-ui/icons/Event';
 import IntegrationsIcon from '@material-ui/icons/SettingsInputComponent';
@@ -97,6 +98,8 @@ const styles = theme => ({
 const pageTitles = {
   'dashboard': 'Dashboard',
   'devices': 'Devices',
+  'channels': 'Channels',
+  'channelDetail': 'Channel Detail',
   'deviceDetail': 'Device Detail',
   'events': 'Event Viewer',
   'integrations': 'Integrations',
@@ -200,6 +203,12 @@ class MainLayout extends React.Component {
               icon={<DevicesIcon/>}
               selected={pathname === 'devices' || pathname === 'deviceDetail'}
               text="Device Manager"
+            />
+            <SideMenuItem
+              to="/channels"
+              icon={<ChannelsIcon/>}
+              selected={pathname === 'channels' || pathname === 'channelDetail'}
+              text="Channels"
             />
             <SideMenuItem
               to="/events"

@@ -8,6 +8,8 @@ import Login from '../containers/Login';
 import Dashboard from '../containers/Dashboard';
 import Devices from '../containers/Devices';
 import DeviceDetail from '../containers/Devices/detail';
+import Channels from '../containers/Channels';
+import ChannelDetail from '../containers/Channels/detail';
 import Events from '../containers/Events';
 import EventDetail from '../containers/Events/detail';
 import Integrations from '../containers/Integrations';
@@ -16,6 +18,8 @@ const userPaths = [
   'dashboard',
   'devices',
   'deviceDetail',
+  'channels',
+  'channelDetail',
   'events',
   'eventDetail',
   'integrations',
@@ -76,6 +80,18 @@ class Routes extends Component {
               exact
               path="/devices/:deviceId"
               component={DeviceDetail}
+            />
+            <Route
+              location={location}
+              exact
+              path="/channels"
+              component={Channels}
+            />
+            <Route
+              location={location}
+              exact
+              path="/channels/:channelId"
+              component={ChannelDetail}
             />
             <Route
               location={location}
