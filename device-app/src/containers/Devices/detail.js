@@ -55,9 +55,19 @@ class DeviceDetail extends Component {
     this.props.getDevice(deviceId);
   }
 
+  componentWillReceiveProps(props) {
+    this.setState({
+      key: props.device.key,
+      name: props.device.name,
+      type: props.device.type,
+    })
+  }
+
   editDevice = () => {
     const { name, type } = this.state;
     const deviceId = this.props.match.params.deviceId;
+
+    console.log(type);
 
     this.props.editDevice(deviceId, {
       name,
@@ -71,13 +81,14 @@ class DeviceDetail extends Component {
     });
   }
 
-  enableEdit = () => {
+  enableEdit = (isEditMode) => {
     this.setState({
-      isEditMode: true,
+      isEditMode,
     })
   }
 
   handleInputChange = event => {
+    console.log(event.target);
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -102,66 +113,56 @@ class DeviceDetail extends Component {
               <td>{ device.key }</td>
             </tr>
             <tr>
+              <td><b>Device Type: </b></td>
+              <td>{device.type}</td>
+            </tr>
+            <tr>
               <td><b>Device Name: </b></td>
               <td>
                 {
                   isEditMode ? (
-                    <FormControl className={classes.formControl} error={this.state.deviceName === null} fullWidth aria-describedby="component-error-text">
-                      <InputLabel htmlFor="component-error">Device Name*</InputLabel>
+                    <FormControl className={classes.formControl} error={this.state.name === null} fullWidth aria-describedby="component-error-text">
                       <Input name="name" value={this.state.name} onChange={this.handleInputChange} />
                     </FormControl>
                   ) : device.name
                 }
               </td>
             </tr>
-            <tr>
-              <td><b>Device Type: </b></td>
-              <td>
-                {
-                  isEditMode ? (
-                    <FormControl className={classes.formControl} fullWidth>
-                      <InputLabel htmlFor="type">Device Type</InputLabel>
-                      <Select
-                        value={this.state.type}
-                        onChange={this.handleInputChange}
-                        inputProps={{
-                          name: 'type',
-                          id: 'type',
-                        }}
-                      >
-                        <MenuItem value="device">Device</MenuItem>
-                        <MenuItem value="app">App</MenuItem>
-                      </Select>
-                    </FormControl>
-                  ) : device.type
-                }
-              </td>
-            </tr>
           </tbody>
         </table>
 
-        {/*{*/}
-          {/*isEditMode ? (*/}
-            {/*<Button*/}
-              {/*className={classes.button}*/}
-              {/*color="primary"*/}
-              {/*onClick={this.editDevice}*/}
-              {/*variant="contained"*/}
-              {/*disabled={this.props.isEditingDevice}*/}
-            {/*>*/}
-              {/*Save*/}
-            {/*</Button>*/}
-          {/*) : (*/}
-            {/*<Button*/}
-              {/*className={classes.button}*/}
-              {/*color="primary"*/}
-              {/*onClick={this.enableEdit}*/}
-              {/*variant="contained"*/}
-            {/*>*/}
-              {/*Edit*/}
-            {/*</Button>*/}
-          {/*)*/}
-        {/*}*/}
+        {
+          isEditMode ? (
+            <div>
+              <Button
+                className={classes.button}
+                color="primary"
+                onClick={this.editDevice}
+                variant="contained"
+                disabled={this.props.isEditingDevice}
+              >
+                Save
+              </Button>
+              <Button
+                className={classes.button}
+                color="primary"
+                onClick={() => this.enableEdit(false)}
+                variant="contained"
+              >
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className={classes.button}
+              color="primary"
+              onClick={() => this.enableEdit(true)}
+              variant="contained"
+            >
+              Edit
+            </Button>
+          )
+        }
       </div>
     )
   }

@@ -104,6 +104,31 @@ export const getChannel = (id) => dispatch => {
   });
 }
 
+export const deleteChannel = (id) => dispatch => {
+  return new Promise(function(resolve, reject) {
+    dispatch({
+      type: constants.DELETE_CHANNEL_REQUEST,
+    });
+
+    axios.delete(`/channels/${id}`)
+      .then(res => {
+        dispatch({
+          type: constants.DELETE_CHANNEL_SUCCESS,
+          payload: res.data
+        })
+
+        resolve();
+      })
+      .catch(error => {
+        dispatch({
+          type: constants.DELETE_CHANNEL_FAILURE,
+          payload: error.data
+        })
+        reject();
+      });
+  });
+}
+
 export const addDeviceToChannel = (channelId, deviceId) => dispatch => {
   return new Promise(function(resolve, reject) {
     dispatch({
@@ -122,6 +147,31 @@ export const addDeviceToChannel = (channelId, deviceId) => dispatch => {
       .catch(error => {
         dispatch({
           type: constants.ADD_DEVICE_TO_CHANNEL_FAILURE,
+          payload: error.data
+        })
+        reject();
+      });
+  });
+}
+
+export const deleteDeviceFromChannel = (channelId, deviceId) => dispatch => {
+  return new Promise(function(resolve, reject) {
+    dispatch({
+      type: constants.DELETE_DEVICE_FROM_CHANNEL_REQUEST,
+    });
+
+    axios.delete(`/channels/${channelId}/things/${deviceId}`)
+      .then(res => {
+        dispatch({
+          type: constants.DELETE_DEVICE_FROM_CHANNEL_SUCCESS,
+          payload: res.data
+        })
+
+        resolve();
+      })
+      .catch(error => {
+        dispatch({
+          type: constants.DELETE_DEVICE_FROM_CHANNEL_FAILURE,
           payload: error.data
         })
         reject();

@@ -5,64 +5,64 @@ export default (state = {}, action) => {
     case constants.GET_CHANNELS_REQUEST:
       return {
         ...state,
-        loadingDevices: true,
+        loadingChannels: true,
       }
     case constants.GET_CHANNELS_SUCCESS:
       return {
         ...state,
         channels: action.payload,
-        loadingDevices: false,
+        loadingChannels: false,
       };
     case constants.GET_CHANNELS_FAILURE:
       return {
         ...state,
-        loadingDevices: false,
+        loadingChannels: false,
       }
     case constants.GET_CHANNEL_REQUEST:
       return {
         ...state,
-        loadingDevices: true,
+        loadingChannels: true,
       }
     case constants.GET_CHANNEL_SUCCESS:
       return {
         ...state,
         channel: action.payload,
-        loadingDevices: false,
+        loadingChannels: false,
       };
     case constants.GET_CHANNEL_FAILURE:
       return {
         ...state,
-        loadingDevices: false,
+        loadingChannels: false,
       }
     case constants.CREATE_CHANNEL_REQUEST:
       return {
         ...state,
-        isCreatingDevice: true,
+        isCreatingChannel: true,
       }
     case constants.CREATE_CHANNEL_SUCCESS:
       return {
         ...state,
-        isCreatingDevice: false,
+        isCreatingChannel: false,
       }
     case constants.CREATE_CHANNEL_FAILURE:
       return {
         ...state,
-        isCreatingDevice: false,
+        isCreatingChannel: false,
       }
     case constants.EDIT_CHANNEL_REQUEST:
       return {
         ...state,
-        isEditingDevice: true,
+        isEditingChannel: true,
       }
     case constants.EDIT_CHANNEL_SUCCESS:
       return {
         ...state,
-        isEditingDevice: false,
+        isEditingChannel: false,
       }
     case constants.EDIT_CHANNEL_FAILURE:
       return {
         ...state,
-        isEditingDevice: false,
+        isEditingChannel: false,
       }
     case constants.ADD_DEVICE_TO_CHANNEL_REQUEST:
       return {

@@ -12,12 +12,18 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import EnhancedTableHead from '../EnhancedTableHead';
+import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import { devices } from '../../../constants/index';
 
 const styles = theme => ({
   root: {
     width: '100%',
+  },
+  deleteIcon: {
+    cursor: 'pointer',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -66,6 +72,7 @@ const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Device Name' },
   { id: 'key', numeric: false, disablePadding: true, label: 'Device Key' },
   { id: 'type', numeric: false, disablePadding: true, label: 'Device Type' },
+  { id: 'action', numeric: false, disabledPadding: true, label: 'Actions'},
 ];
 
 class DevicesTable extends Component {
@@ -76,6 +83,8 @@ class DevicesTable extends Component {
     data: devices,
     page: 0,
     rowsPerPage: 5,
+    deleteDeviceId: -1,
+    isConfirmDialogOpen: false,
   };
 
   handleRequestSort = (event, property) => {
@@ -89,10 +98,6 @@ class DevicesTable extends Component {
     this.setState({ order, orderBy });
   };
 
-  handleClick = (event, deviceId) => {
-    this.props.history.push(`/devices/${deviceId}`);
-  };
-
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -100,6 +105,32 @@ class DevicesTable extends Component {
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
   };
+
+  handleClickConfirm = event => {
+    this.props.onDeleteDevice(this.state.deleteDeviceId);
+    this.setState({
+      isConfirmDialogOpen: false,
+      deleteDeviceId: -1,
+    })
+  }
+
+  handleClickDismiss = event => {
+    this.setState({
+      isConfirmDialogOpen: false,
+      deleteDeviceId: -1,
+    })
+  }
+
+  handleClick = (event, deviceId) => {
+    this.props.history.push(`/devices/${deviceId}`);
+  };
+
+  handleDeleteIconClick = deleteDeviceId => {
+    this.setState({
+      deleteDeviceId,
+      isConfirmDialogOpen: true,
+    });
+  }
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
@@ -139,6 +170,14 @@ class DevicesTable extends Component {
                       <TableCell>{n.name}</TableCell>
                       <TableCell>{n.key}</TableCell>
                       <TableCell>{n.type}</TableCell>
+                      <TableCell
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <DeleteIcon
+                          className={classes.deleteIcon}
+                          onClick={() => { this.handleDeleteIconClick(n.id) }}
+                        />
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -163,6 +202,13 @@ class DevicesTable extends Component {
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
+        <ConfirmDialog
+          contentText="Do you want to delete this device?"
+          onClickConfirm={this.handleClickConfirm}
+          onClickDismiss={this.handleClickDismiss}
+          open={this.state.isConfirmDialogOpen}
+          titleText="Confirm"
         />
       </Paper>
     );

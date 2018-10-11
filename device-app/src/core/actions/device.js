@@ -103,3 +103,28 @@ export const getDevice = (id) => dispatch => {
       });
   });
 }
+
+export const deleteDevice = (id) => dispatch => {
+  return new Promise(function(resolve, reject) {
+    dispatch({
+      type: constants.DELETE_DEVICE_REQUEST,
+    });
+
+    axios.delete(`/things/${id}`)
+      .then(res => {
+        dispatch({
+          type: constants.DELETE_DEVICE_SUCCESS,
+          payload: res.data
+        })
+
+        resolve();
+      })
+      .catch(error => {
+        dispatch({
+          type: constants.DELETE_DEVICE_FAILURE,
+          payload: error.data
+        })
+        reject();
+      });
+  });
+}

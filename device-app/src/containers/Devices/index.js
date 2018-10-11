@@ -21,7 +21,7 @@ import Select from '@material-ui/core/Select';
 import { withStyles } from "@material-ui/core/styles/index";
 
 import DevicesTable from '../../components/Tables/DevicesTable';
-import { createDevice, getDevices } from '../../core/actions/device';
+import { createDevice, getDevices, deleteDevice } from '../../core/actions/device';
 
 const styles = theme => ({
   root: {
@@ -86,6 +86,16 @@ class Devices extends Component {
     }
   };
 
+  deleteDevice = (id) => {
+    this.props.deleteDevice(id)
+      .then(() => {
+        this.props.getDevices();
+      })
+      .catch(() => {
+        alert('Error while deleting device');
+      });
+  }
+
   render() {
     const { classes, history } = this.props;
     const { expanded } = this.state;
@@ -121,10 +131,6 @@ class Devices extends Component {
               >
                 <MenuItem value="device">Device</MenuItem>
                 <MenuItem value="app">App</MenuItem>
-                {/*<MenuItem value={1}>Gun</MenuItem>*/}
-                {/*<MenuItem value={2}>Scope</MenuItem>*/}
-                {/*<MenuItem value={3}>Drone</MenuItem>*/}
-                {/*<MenuItem value={4}>Other</MenuItem>*/}
               </Select>
             </FormControl>
 
@@ -147,6 +153,7 @@ class Devices extends Component {
             <DevicesTable
               history={history}
               data={this.props.devices ? this.props.devices.things : []}
+              onDeleteDevice={this.deleteDevice}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -171,6 +178,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getDevices: () => dispatch(getDevices()),
     createDevice: data => dispatch(createDevice(data)),
+    deleteDevice: id => dispatch(deleteDevice(id)),
   }
 }
 

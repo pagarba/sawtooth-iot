@@ -45,9 +45,7 @@ class ChannelDetail extends Component {
 
     this.state = {
       isEditMode: false,
-      key: '',
       name: '',
-      type: '',
     };
   }
 
@@ -56,7 +54,13 @@ class ChannelDetail extends Component {
     this.props.getChannel(channelId);
   }
 
-  editDevice = () => {
+  componentWillReceiveProps(props) {
+    this.setState({
+      name: props.channel.name,
+    })
+  }
+
+  editChannel = () => {
     const { name } = this.state;
     const channelId = this.props.match.params.channelId;
 
@@ -69,6 +73,12 @@ class ChannelDetail extends Component {
         })
       });
     });
+  }
+
+  enableEdit = (isEditMode) => {
+    this.setState({
+      isEditMode,
+    })
   }
 
   handleInputChange = event => {
@@ -97,7 +107,6 @@ class ChannelDetail extends Component {
                 {
                   isEditMode ? (
                     <FormControl className={classes.formControl} error={this.state.channelName === null} fullWidth aria-describedby="component-error-text">
-                      <InputLabel htmlFor="component-error">Channel Name*</InputLabel>
                       <Input name="name" value={this.state.name} onChange={this.handleInputChange} />
                     </FormControl>
                   ) : channel.name
@@ -107,34 +116,44 @@ class ChannelDetail extends Component {
           </tbody>
         </table>
 
-        <br/>
+        {
+          isEditMode ? (
+            <div>
+              <Button
+                className={classes.button}
+                color="primary"
+                onClick={this.editChannel}
+                variant="contained"
+                disabled={this.props.isEditingChannel}
+              >
+                Save
+              </Button>
+              <Button
+                className={classes.button}
+                color="primary"
+                onClick={() => this.enableEdit(false)}
+                variant="contained"
+              >
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className={classes.button}
+              color="primary"
+              onClick={() => this.enableEdit(true)}
+              variant="contained"
+            >
+              Edit
+            </Button>
+          )
+        }
+
+        <br/> <br/> <br/>
 
         <ChannelDevices
           channel={channel}
         />
-
-        {/*{*/}
-          {/*isEditMode ? (*/}
-            {/*<Button*/}
-              {/*className={classes.button}*/}
-              {/*color="primary"*/}
-              {/*onClick={this.editDevice}*/}
-              {/*variant="contained"*/}
-              {/*disabled={this.props.isEditingDevice}*/}
-            {/*>*/}
-              {/*Save*/}
-            {/*</Button>*/}
-          {/*) : (*/}
-            {/*<Button*/}
-              {/*className={classes.button}*/}
-              {/*color="primary"*/}
-              {/*onClick={this.enableEdit}*/}
-              {/*variant="contained"*/}
-            {/*>*/}
-              {/*Edit*/}
-            {/*</Button>*/}
-          {/*)*/}
-        {/*}*/}
       </div>
     )
   }

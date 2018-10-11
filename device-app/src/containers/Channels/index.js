@@ -15,13 +15,11 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 
 import { withStyles } from "@material-ui/core/styles/index";
 
 import ChannelsTable from '../../components/Tables/ChannelsTable';
-import { createChannel, getChannels } from '../../core/actions/channel';
+import { createChannel, getChannels, deleteChannel } from '../../core/actions/channel';
 
 const styles = theme => ({
   root: {
@@ -83,6 +81,16 @@ class Channels extends Component {
     }
   };
 
+  deleteChannel = (id) => {
+    this.props.deleteChannel(id)
+      .then(() => {
+        this.props.getChannels();
+      })
+      .catch(() => {
+        alert('Error while deleting channel');
+      });
+  }
+
   render() {
     const { classes, history } = this.props;
     const { expanded } = this.state;
@@ -119,6 +127,7 @@ class Channels extends Component {
             <ChannelsTable
               history={history}
               data={this.props.channels ? this.props.channels.channels : []}
+              onDeleteChannel={this.deleteChannel}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -143,6 +152,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getChannels: () => dispatch(getChannels()),
     createChannel: data => dispatch(createChannel(data)),
+    deleteChannel: id => dispatch(deleteChannel(id)),
   }
 }
 

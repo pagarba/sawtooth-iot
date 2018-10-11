@@ -12,12 +12,18 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import EnhancedTableHead from '../EnhancedTableHead';
+import ConfirmDialog from '../../Dialogs/ConfirmDialog';
 import { devices } from '../../../constants/index';
 
 const styles = theme => ({
   root: {
     width: '100%',
+  },
+  deleteIcon: {
+    cursor: 'pointer',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -66,6 +72,7 @@ const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Device Name' },
   { id: 'key', numeric: false, disablePadding: true, label: 'Device Key' },
   { id: 'type', numeric: false, disablePadding: true, label: 'Device Type' },
+  { id: 'type', numeric: false, disablePadding: true, label: 'Actions' },
 ];
 
 class ChannelDevicesTable extends Component {
@@ -76,6 +83,8 @@ class ChannelDevicesTable extends Component {
     data: devices,
     page: 0,
     rowsPerPage: 5,
+    isConfirmDialogOpen: false,
+    deleteDeviceId: -1,
   };
 
   handleRequestSort = (event, property) => {
@@ -89,9 +98,27 @@ class ChannelDevicesTable extends Component {
     this.setState({ order, orderBy });
   };
 
-  handleClick = (event, deviceId) => {
-    this.props.history.push(`/devices/${deviceId}`);
-  };
+  handleClickConfirm = event => {
+    this.props.onDeleteDeviceFromChannel(this.state.deleteDeviceId);
+    this.setState({
+      isConfirmDialogOpen: false,
+      deleteDeviceId: -1,
+    })
+  }
+
+  handleClickDismiss = event => {
+    this.setState({
+      isConfirmDialogOpen: false,
+      deleteDeviceId: -1,
+    })
+  }
+
+  handleDeleteIconClick = deleteDeviceId => {
+    this.setState({
+      deleteDeviceId,
+      isConfirmDialogOpen: true,
+    });
+  }
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -138,6 +165,14 @@ class ChannelDevicesTable extends Component {
                       <TableCell>{n.name}</TableCell>
                       <TableCell>{n.key}</TableCell>
                       <TableCell>{n.type}</TableCell>
+                      <TableCell
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <DeleteIcon
+                          className={classes.deleteIcon}
+                          onClick={() => { this.handleDeleteIconClick(n.id) }}
+                        />
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -162,6 +197,13 @@ class ChannelDevicesTable extends Component {
           }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
+        <ConfirmDialog
+          contentText="Do you want to disconnect this device?"
+          onClickConfirm={this.handleClickConfirm}
+          onClickDismiss={this.handleClickDismiss}
+          open={this.state.isConfirmDialogOpen}
+          titleText="Confirm"
         />
       </Paper>
     );

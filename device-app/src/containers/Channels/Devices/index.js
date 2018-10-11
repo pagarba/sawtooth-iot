@@ -21,7 +21,7 @@ import Select from '@material-ui/core/Select';
 import { withStyles } from "@material-ui/core/styles/index";
 
 import ChannelDevicesTable from '../../../components/Tables/ChannelDevicesTable';
-import { addDeviceToChannel, getChannel, getChannels } from '../../../core/actions/channel'
+import { addDeviceToChannel, deleteDeviceFromChannel, getChannel, getChannels } from '../../../core/actions/channel'
 import { getDevices } from '../../../core/actions/device'
 
 const styles = theme => ({
@@ -92,6 +92,18 @@ class Devices extends Component {
     }
   };
 
+  deleteDeviceFromChannel = (deviceId) => {
+    const { id } = this.props.channel;
+
+    this.props.deleteDeviceFromChannel(id, deviceId)
+      .then(() => {
+        this.props.getChannel(id);
+      })
+      .catch(() => {
+        alert('Error while disconnecting device');
+      });
+  }
+
   render() {
     const { classes, history } = this.props;
     const { expanded } = this.state;
@@ -144,6 +156,7 @@ class Devices extends Component {
             <ChannelDevicesTable
               data={connectedDevices}
               history={history}
+              onDeleteDeviceFromChannel={this.deleteDeviceFromChannel}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -167,6 +180,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addDeviceToChannel: (channelId, deviceId) => dispatch(addDeviceToChannel(channelId, deviceId)),
+    deleteDeviceFromChannel: (channelId, deviceId) => dispatch(deleteDeviceFromChannel(channelId, deviceId)),
     getChannels: () => dispatch(getChannels()),
     getDevices: () => dispatch(getDevices()),
     getChannel: (id) => dispatch(getChannel(id)),
